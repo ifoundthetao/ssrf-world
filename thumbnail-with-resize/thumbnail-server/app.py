@@ -36,8 +36,11 @@ def home_page():
     driver = webdriver.Chrome(options=options)
     driver.get(location)
     base64Image = driver.get_screenshot_as_base64()
+    data = {'b64_image': base64Image}
+    r = requests.post('http://resizer:4000', data=data)
+    resizedBase64Image = r.text
     driver.close()
-    return "<!doctype html><html><body><img src='data:image/png;base64, " + base64Image + "'></body></html>"
+    return "<!doctype html><html><body><img src='data:image/png;base64, " + resizedBase64Image + "'></body></html>"
 
 if __name__ == '__main__':
     app.run(debug=False, port=5000)

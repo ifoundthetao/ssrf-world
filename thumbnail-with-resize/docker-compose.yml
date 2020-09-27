@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+    thumbnailer:
+        build: ./thumbnail-server
+        ports: 
+            - "5000:5000"
+    resizer:
+        build: ./resize-server
