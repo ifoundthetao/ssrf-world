@@ -13,7 +13,7 @@ def main():
         commandToRun += "; convert img.png -geometry 200x resized-img.png "
         commandToRun += "; base64 resized-img.png "
         commandToRun += "| tr -d '\\n' > resized-img.b64"
-        print(commandToRun)
+    
         subprocess.Popen(commandToRun
                 , stdout=subprocess.PIPE
                 , shell=True
@@ -24,8 +24,8 @@ def main():
         defaultImage = open('no-img.txt', 'r')
         resizedImage = defaultImage.read()
         defaultImage.close()
-        print("Failure")
     return resizedImage
 
 if __name__ == '__main__':
     app.run(debug=False, host="0.0.0.0", port=4000)
+    #app.run(debug=False, port=4000)
