@@ -1,0 +1,10 @@
+Save file to disk
+ - See what FileAPI and other things are available to write a file to disk, then execute it.
+
+Attack site
+ - Use SSRF to attack another website, so that attribution is set to the vulnerable site
+
+Attack ImageMagick implementation
+ - Install vulnerable version of ImageMagick, use SSRF to attack this for a shell
+
+

