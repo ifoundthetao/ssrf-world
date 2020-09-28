@@ -23,7 +23,6 @@ def admin_page():
 @app.route('/', methods=['GET'])
 def home_page():
     location = request.args.get('l')
-    print("Location: %s" % (location))
     options = webdriver.ChromeOptions()
 
     options.add_argument('--ignore-certificate-errors')
